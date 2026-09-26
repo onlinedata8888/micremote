@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0e12">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjogIkFuZHJvaWQgVFYgUmVtb3RlIiwgInNob3J0X25hbWUiOiAiVFYgUmVtb3RlIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdCIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwZDBlMTIiLCAidGhlbWVfY29sb3IiOiAiIzBkMGUxMiIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDE5MiAxOTInJTNFJTNDcmVjdCB3aWR0aD0nMTkyJyBoZWlnaHQ9JzE5Micgcng9JzM2JyBmaWxsPSclMjMxYTFjMjInLyUzRSUzQ3JlY3QgeD0nNTYnIHk9JzMwJyB3aWR0aD0nODAnIGhlaWdodD0nMTMyJyByeD0nMjQnIGZpbGw9JyUyMzI0MjYyZScgc3Ryb2tlPSclMjMzZWU2YTgnIHN0cm9rZS13aWR0aD0nMycvJTNFJTNDY2lyY2xlIGN4PSc5NicgY3k9JzU4JyByPSc2JyBmaWxsPSclMjMzZWU2YTgnLyUzRSUzQ3JlY3QgeD0nNzInIHk9JzgwJyB3aWR0aD0nNDgnIGhlaWdodD0nNDgnIHJ4PScyNCcgZmlsbD0nJTIzMmIyZTM1Jy8lM0UlM0Mvc3ZnJTNFIiwgInNpemVzIjogIjE5MngxOTIiLCAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwgInB1cnBvc2UiOiAiYW55In1dfQ==">
+<title>TV Remote — Mockup</title>
+<style>
+  :root{
+    --page-bg-1:#1a1c22;
+    --page-bg-2:#0d0e12;
+    --phone-body:#1c1e24;
+    --phone-body-2:#141519;
+    --phone-edge:#2c2f37;
+    --screen-bg-1:#181a20;
+    --screen-bg-2:#101116;
+    --btn-bg:#24262e;
+    --btn-bg-hi:#2c2f38;
+    --icon:#d9dade;
+    --icon-dim:#e7e5df;
+    --muted-text:#7d818c;
+    --divider:#2a2c33;
+    --pad-bg:#2b2e35;
+    --pad-border:#383b44;
+    --accent-green:#3ee6a8;
+    --accent-red:#ef4444;
+    --accent-red-dim:#c23b3b;
+    --slider-fill-1:#22d3b8;
+    --slider-fill-2:#0fae94;
+    --netflix-black:#141414;
+    --netflix-red:#e63a4e;
+    --yt-red:#ee3d3d;
+    --prime-blue:#12a7e0;
+    --shadow: rgba(0,0,0,0.45);
+  }
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+  :root[data-theme="light"]{
+    --page-bg-1:#eef0f3;
+    --page-bg-2:#dfe2e7;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --page-bg-1:#eef0f3;
+      --page-bg-2:#dfe2e7;
+    }
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{
+    margin:0; padding:0; height:100%;
+    background: radial-gradient(120% 120% at 50% 0%, var(--page-bg-1), var(--page-bg-2));
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    overflow-x:hidden;
+  }
+  .stage{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    box-sizing:border-box;
+  }
+
+  /* ---------- Phone frame removed, but keep a real mobile-like tall ratio (~1:1.9) ---------- */
+  .phone{
+    position:relative;
+    width:min(100vw, 420px); /* phone-like width on desktop */
+    height:min(100vh, calc(min(100vw, 420px) * 2.1));
+    flex-shrink:0;
+    background:transparent;
+    border-radius:0;
+    padding:0;
+    box-shadow:none;
+    border:none;
+    container-type: inline-size; /* makes cqw below track this box's real width, not the browser window's */
+    container-name: phone;
+  }
+  .phone::before{ display:none; } /* camera hole removed */
+  .side-btn{ display:none; } /* side power/volume lines removed */
+
+  .screen{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:0;
+    background: linear-gradient(180deg, var(--screen-bg-1), var(--screen-bg-2));
+    overflow-x:hidden;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    padding:18px 14px 12px;
+    gap:12px;
+  }
+
+  .cam-safe-area{
+    flex:none;
+    height:54px; /* combined with the .screen top padding (18px) ≈ 0.75in blank space */
+    width:100%;
+  }
+
+  /* ---------- Top: power / title / menu ---------- */
+  .top-row{
+    flex:none;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .title-block{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    gap:5px;
+    border:none;
+    background:transparent;
+    padding:4px 6px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:background .12s ease;
+  }
+  .title-block:active{ background:rgba(255,255,255,0.06); }
+  .status-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 5px rgba(34,197,94,0.7);
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .status-dot.offline{
+    background:#ef4444;
+    box-shadow:0 0 5px rgba(239,68,68,0.7);
+  }
+  .tv-name{
+    font-size:11.5px;
+    letter-spacing:0.4px;
+    color:var(--accent-green);
+    font-weight:700;
+  }
+  .tv-version{
+    font-size:8.5px;
+    letter-spacing:0.3px;
+    color:var(--muted-text);
+    font-weight:600;
+    background:rgba(255,255,255,0.06);
+    padding:1px 5px;
+    border-radius:6px;
+  }
+  .tv-chevron{
+    width:11px; height:11px;
+    color:var(--accent-green);
+    flex-shrink:0;
+    transition:transform .15s ease;
+  }
+  .title-block.open .tv-chevron{ transform:rotate(180deg); }
+
+  .tv-dropdown{
+    position:absolute;
+    top:clamp(100px, 34cqw, 140px); left:14px; right:14px;
+    background:#1d1f26;
+    border:1px solid var(--divider);
+    border-radius:14px;
+    padding:8px;
+    box-shadow:0 12px 24px rgba(0,0,0,0.5);
+    z-index:30;
+    display:none;
+    flex-direction:column;
+    gap:2px;
+  }
+  .tv-dropdown.open{ display:flex; }
+  .tv-dropdown-title{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:9.5px;
+    color:var(--muted-text);
+    padding:4px 6px 8px;
+  }
+  .spinner{
+    width:9px; height:9px;
+    border-radius:50%;
+    border:1.6px solid rgba(62,230,168,0.25);
+    border-top-color:var(--accent-green);
+    animation:spin .8s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .tv-option{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    border:none;
+    background:transparent;
+    color:var(--icon-dim);
+    font-size:11px;
+    padding:8px 8px;
+    border-radius:9px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .tv-option:active{ background:rgba(255,255,255,0.05); }
+  .tv-option.selected{ background:rgba(62,230,168,0.12); color:var(--accent-green); font-weight:600; }
+  .tv-option-dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:#22c55e;
+    flex-shrink:0;
+  }
+
+  /* ---------- Circular buttons, shared ---------- */
+  .circle-btn{
+    border:none;
+    border-radius:50%;
+    background:var(--btn-bg);
+    color:var(--icon);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform .12s ease, background .12s ease;
+    flex-shrink:0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+  }
+  .circle-btn:active{ transform:scale(0.90); background:var(--btn-bg-hi); }
+  .circle-btn svg{ width:50%; height:50%; }
+
+  .btn-44{ width:clamp(30px, 12.9cqw, 60px); height:clamp(30px, 12.9cqw, 60px); }
+  .btn-46{ width:clamp(34px, 14.85cqw, 73px); height:clamp(34px, 14.85cqw, 73px); }
+  .btn-wide2{
+    width:clamp(75px, 33.8cqw, 161px);
+    height:clamp(34px, 14.85cqw, 73px);
+    border-radius:clamp(17px, 7.4cqw, 36px);
+  }
+  .btn-40{ width:clamp(27px, 11.7cqw, 55px); height:clamp(27px, 11.7cqw, 55px); }
+  .btn-36{ width:clamp(24px, 10.6cqw, 50px); height:clamp(24px, 10.6cqw, 50px); }
+  .btn-30{ width:clamp(20px, 8.8cqw, 42px); height:clamp(20px, 8.8cqw, 42px); }
+
+  .power-btn{ color:var(--accent-red); }
+  .power-btn.on{ background:rgba(239,68,68,0.14); box-shadow: inset 0 0 0 1px rgba(239,68,68,0.35); }
+
+  /* ---------- App shortcuts row ---------- */
+  .apps-scroll{
+    flex:none;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    cursor:grab;
+  }
+  .apps-scroll::-webkit-scrollbar{ display:none; }
+  .apps-scroll.dragging{ cursor:grabbing; }
+  .apps-row{
+    display:flex;
+    align-items:center;
+    gap:clamp(5px, 2.4cqw, 9px);
+    padding:2px 4px;
+    width:max-content;
+  }
+  .app-icon{
+    position:relative;
+    flex:0 0 auto;
+    width:88px; height:38px;
+    border-radius:9px;
+    border:none;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform .12s ease;
+  }
+  .apps-row.reorder-mode .app-icon:not(.add-app-btn){ touch-action:none; }
+  .app-icon:active{ transform:scale(0.92); }
+  .app-icon svg{ width:42%; height:42%; }
+  .app-icon.youtube{ background:var(--yt-red); }
+  .app-icon.netflix{ background:var(--netflix-black); box-shadow: inset 0 0 0 1px #2a2a2a; }
+  .app-icon.netflix span{
+    color:var(--netflix-red); font-weight:800; font-size:19px; font-family:Georgia,serif;
+  }
+  .app-icon.prime{ background:var(--prime-blue); }
+  .app-icon.hotstar{ background:#0f1e46; }
+  .app-icon span{ white-space:nowrap; overflow:hidden; padding:0 3px; }
+  .app-icon.hotstar span{ color:#fff; font-weight:800; font-size:13.5px; letter-spacing:0.1px; }
+  .app-icon.zee5{ background:#5b1fb8; }
+  .app-icon.zee5 span{ color:#fff; font-weight:800; font-size:14.5px; }
+  .app-icon.sonyliv{ background:linear-gradient(135deg,#1a1147,#7a2fc9); }
+  .app-icon.sonyliv span{ color:#fff; font-weight:800; font-size:13.5px; }
+  .app-icon.jiocinema{ background:#7a1230; }
+  .app-icon.jiocinema span{ color:#fff; font-weight:800; font-size:14.5px; }
+  .app-icon.custom-app{ background:#2c2f38; }
+  .app-icon.custom-app span{ color:#c7cad0; font-weight:800; font-size:13.5px; }
+
+  /* "+" add-app button — same footprint as an app icon, sits at the end of the row */
+  .app-icon.add-app-btn{
+    background:transparent;
+    box-shadow: inset 0 0 0 1.4px dashed rgba(255,255,255,0.22);
+  }
+  .app-icon.add-app-btn svg{ width:32%; height:32%; color:#9a9ea6; }
+
+  /* Reorder ("rearrange") mode: icons jiggle like a home-screen edit mode.
+     Hold an icon → whole row wiggles + a small X appears top-right of each
+     icon. Drag any icon left/right to reorder it live; tap an X to delete. */
+  .apps-row.reorder-mode .app-icon:not(.add-app-btn){
+    animation: app-wiggle 0.26s ease-in-out infinite;
+    animation-delay: calc(var(--wiggle-seed, 0) * -0.09s);
+  }
+  .apps-row.reorder-mode .app-icon.add-app-btn{ visibility:hidden; }
+  .apps-row.reorder-mode .app-icon.reorder-picked{
+    animation:none;
+    transform:scale(1.1);
+    z-index:60;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.5);
+  }
+  @keyframes app-wiggle{
+    0%{ transform:rotate(-1.6deg); }
+    50%{ transform:rotate(1.6deg); }
+    100%{ transform:rotate(-1.6deg); }
+  }
+
+  /* Delete "X" badge — only visible while the row is wiggling */
+  .app-remove-x{
+    display:none;
+    position:absolute;
+    top:-6px; right:-6px;
+    width:16px; height:16px;
+    border-radius:50%;
+    background:#3a3d46;
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+    line-height:16px;
+    text-align:center;
+    border:1.5px solid #0f1013;
+    z-index:70;
+    cursor:pointer;
+  }
+  .apps-row.reorder-mode .app-icon:not(.add-app-btn) .app-remove-x{
+    display:block;
+  }
+
+  .reorder-done{
+    display:none;
+    position:absolute;
+    top:6px; right:10px;
+    z-index:40;
+    border:none;
+    background:var(--accent-green);
+    color:#08110d;
+    font-size:11px;
+    font-weight:800;
+    padding:6px 14px;
+    border-radius:14px;
+    cursor:pointer;
+  }
+  .reorder-done.open{ display:block; }
+
+  /* (Long-press now enters wiggle/rearrange mode directly — see .apps-row.reorder-mode above) */
+
+  /* Add-app overlay */
+  .add-app-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(6,7,10,0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index:100;
+    display:none;
+    flex-direction:column;
+    padding:16px 16px 14px;
+  }
+  .add-app-overlay.open{ display:flex; }
+  .add-app-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:#e7e5df;
+    font-size:15px;
+    font-weight:700;
+    padding-bottom:12px;
+    flex-shrink:0;
+  }
+  .add-app-list{
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .add-app-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border:none;
+    background:#1a1c22;
+    color:#e7e5df;
+    font-size:13px;
+    font-weight:600;
+    padding:9px 12px;
+    border-radius:12px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .add-app-item:active{ background:#23252d; }
+  .add-app-item .app-icon{ pointer-events:none; flex-shrink:0; }
+  .add-app-empty{
+    color:#6f7379;
+    font-size:12px;
+    text-align:center;
+    padding:20px 0;
+  }
+  .add-app-custom{
+    display:flex;
+    gap:8px;
+    padding-top:12px;
+    flex-shrink:0;
+  }
+  .add-app-custom-input{
+    flex:1;
+    min-width:0;
+    background:#1a1c22;
+    border:1px solid var(--divider);
+    border-radius:10px;
+    color:#e7e5df;
+    font-size:13px;
+    padding:9px 12px;
+    outline:none;
+  }
+  .add-app-custom-input::placeholder{ color:#6f7379; }
+  .add-app-custom-btn{
+    border:none;
+    background:var(--accent-green);
+    color:#08110d;
+    font-weight:800;
+    font-size:12.5px;
+    padding:0 16px;
+    border-radius:10px;
+    cursor:pointer;
+  }
+
+  .divider{
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--divider) 15%, var(--divider) 85%, transparent);
+    flex-shrink:0;
+  }
+
+  /* ---------- Touchpad area ---------- */
+  /* separate blocks with gaps:  [arrows] gap [OK / Play-Pause]
+                                 gap
+                                 [touchpad]
+     and every single button is its own tile with a thin gap (they never touch) */
+  .pad-wrap{
+    --block-gap:clamp(5px, 2.6cqw, 10px);   /* between blocks: arrows | OK-Play, and buttons | touchpad */
+    --tile-gap:clamp(3px, 1.3cqw, 5px);     /* thin gap between individual buttons */
+    position:relative;
+    flex:1 0 auto;
+    min-height:calc(clamp(64px, 24cqw, 100px) + var(--block-gap) + 130px); /* arrows + gap + touchpad: never squish/overlap */
+    margin-top:-16px; /* nav-bar-single (media buttons) itself is untouched, this just pulls its whole block up so the apps row sits right above it instead of leaving a bigger gap than the one above the apps row */
+    display:flex;
+    flex-direction:column;
+    gap:var(--block-gap);
+    padding-bottom:2px;
+  }
+  .touchpad{
+    position:relative;
+    flex:1 1 auto;
+    min-height:130px;
+    background:var(--pad-bg);
+    border-radius:22px;
+    box-shadow: inset 0 0 0 1px var(--pad-border);
+    cursor:pointer;
+    overflow:hidden;
+  }
+  .touchpad.active{ background:#31343c; }
+  .pad-hint{
+    position:absolute;
+    top:0; left:0; right:0; bottom:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted-text);
+    font-size:11px;
+    letter-spacing:0.3px;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  /* ---------- Scroll wheel — thin elongated cylinder, like a real mouse's scroll wheel ---------- */
+  .wheel{
+    position:absolute;
+    background:
+      radial-gradient(circle at 30% 15%, rgba(255,255,255,0.28), rgba(255,255,255,0) 45%),
+      linear-gradient(150deg, #45484f, #1c1b20);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.12),
+      inset 0 2px 3px rgba(0,0,0,0.5),
+      0 3px 8px rgba(0,0,0,0.45);
+    overflow:hidden;
+    touch-action:none;
+    transition:box-shadow .15s ease;
+    z-index:3;
+  }
+  .wheel-v{
+    top:0; bottom:0; left:0;
+    width:clamp(14px, 5.3cqw, 24px);
+    border-radius:22px 0 0 22px;
+    cursor:ns-resize;
+  }
+  .wheel-vr{
+    top:0; bottom:0; right:0;
+    width:clamp(14px, 5.3cqw, 24px);
+    border-radius:0 22px 22px 0;
+    cursor:ns-resize;
+  }
+  /* red wheel (right side) = volume */
+  .wheel-red{
+    background:
+      radial-gradient(circle at 30% 15%, rgba(255,255,255,0.32), rgba(255,255,255,0) 45%),
+      linear-gradient(150deg, #ef5b5b, #7d1b1b);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.14),
+      inset 0 2px 3px rgba(0,0,0,0.45),
+      0 3px 8px rgba(0,0,0,0.45);
+  }
+  .wheel-red.active{
+    box-shadow:
+      inset 0 0 0 1px rgba(255,140,140,0.7),
+      inset 0 2px 3px rgba(0,0,0,0.45),
+      0 0 0 4px rgba(239,68,68,0.22),
+      0 3px 8px rgba(0,0,0,0.45);
+  }
+  .wheel-h{
+    left:clamp(14px, 5.3cqw, 24px); right:clamp(14px, 5.3cqw, 24px); bottom:0;
+    height:clamp(18px, 7.1cqw, 32px);
+    border-radius:0;
+    cursor:ew-resize;
+  }
+  .wheel.active{
+    box-shadow:
+      inset 0 0 0 1px rgba(34,211,184,0.6),
+      inset 0 2px 3px rgba(0,0,0,0.5),
+      0 0 0 4px rgba(34,211,184,0.18),
+      0 3px 8px rgba(0,0,0,0.45);
+  }
+  .wheel-groove{
+    position:absolute;
+    inset:0;
+  }
+  .wheel-v .wheel-groove, .wheel-vr .wheel-groove{
+    background-image: repeating-linear-gradient(180deg, rgba(255,255,255,0.20) 0 1.5px, rgba(0,0,0,0) 1.5px 3px, rgba(0,0,0,0.35) 3px 4.5px, rgba(0,0,0,0) 4.5px 9px);
+    background-size: 100% 9px;
+    background-repeat: repeat;
+  }
+  .wheel-h .wheel-groove{
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,0.20) 0 1.5px, rgba(0,0,0,0) 1.5px 3px, rgba(0,0,0,0.35) 3px 4.5px, rgba(0,0,0,0) 4.5px 9px);
+    background-size: 9px 100%;
+    background-repeat: repeat;
+  }
+
+
+  /* navigation buttons row (page 2 D-pad) */
+  .nav-bar{
+    flex:0 0 auto;
+    height:clamp(186px, calc(46cqw + 56px), 246px); /* +56px absorbed from the removed fn-row (TV/INPUT/CC TXT) */
+    display:flex;
+    gap:var(--block-gap);
+    margin-bottom:14px;
+    padding:0 12px;
+  }
+  .nav-arrows{
+    flex:2;
+    display:flex;
+    background:var(--pad-bg);
+    border-radius:16px;
+    box-shadow: inset 0 0 0 1px var(--pad-border);
+    overflow:hidden;
+  }
+  /* the 4 arrows stay together as ONE block, split only by thin lines */
+  .nav-arrows .nav-btn{ background-color:transparent; box-shadow:none; border-radius:0; }
+  .nav-arrows .nav-btn:active{ transform:none; }
+  .nav-arrows .nav-side{ border-right:1.5px solid rgba(255,255,255,0.16); flex:0.95; } /* -5% each side... */
+  .nav-arrows .nav-side.right{ border-right:none; border-left:1.5px solid rgba(255,255,255,0.16); }
+  .nav-arrows .nav-mid{ gap:0; flex:1.1; } /* ...+10% to the up/OK/down column */
+  .nav-arrows .nav-mid .nav-btn:first-child{ border-bottom:1.5px solid rgba(255,255,255,0.16); }
+  /* 3-cell middle column (up / OK / down), used by the page-2 D-pad — lines made a touch more visible so left/right/up/down read as separate cells */
+  .nav-arrows .nav-mid.nav-mid-3 .nav-btn:not(:last-child){ border-bottom:1.5px solid rgba(255,255,255,0.16); }
+  .nav-btn.ok-mid .nav-label{ color:var(--slider-fill-1); }
+
+  /* single big Forward tile above the touchpad (page 1) */
+  .nav-bar-single{
+    flex:0 0 auto;
+    height:clamp(64px, 24cqw, 100px);
+    display:flex;
+    align-items:flex-end; /* media buttons sit at the bottom of this block, right against the touchpad, killing the empty gap above the pad */
+  }
+  .media-row-top{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:clamp(5px, 2.4cqw, 10px);
+    align-items:center;
+  }
+  .media-row-top .media-btn{ width:100%; height:auto; aspect-ratio:1 / 1; }
+  .fwd-tile{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--pad-bg);
+    border-radius:16px;
+    box-shadow: inset 0 0 0 1px var(--pad-border);
+    color:var(--icon);
+    cursor:pointer;
+    transition: transform .12s ease, color .12s ease, background-image .12s ease;
+  }
+  .fwd-tile:active{
+    background-image:linear-gradient(rgba(34,211,184,0.18), rgba(34,211,184,0.18));
+    color:var(--slider-fill-1);
+    transform:scale(0.97);
+  }
+  .fwd-tile svg{ width:clamp(28px, 11cqw, 46px); height:clamp(28px, 11cqw, 46px); }
+
+  .nav-mid{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:var(--tile-gap);
+  }
+  .nav-btn{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--icon);
+    cursor:pointer;
+    background-color:var(--pad-bg);
+    border-radius:14px;
+    box-shadow: inset 0 0 0 1px var(--pad-border);
+    transition: transform .12s ease, color .12s ease;
+  }
+  .nav-btn:active{
+    background-image:linear-gradient(rgba(34,211,184,0.18), rgba(34,211,184,0.18));
+    color:var(--slider-fill-1);
+    transform:scale(0.96);
+  }
+  .nav-btn svg{ width:clamp(18px, 7.4cqw, 32px); height:clamp(18px, 7.4cqw, 32px); }
+  .nav-label{
+    font-size:clamp(13px, 4.7cqw, 20px);
+    font-weight:700;
+    letter-spacing:0.6px;
+    user-select:none;
+  }
+
+  /* cursor button, bottom-left corner of the pad */
+  .pad-corner-controls{
+    position:absolute;
+    bottom:10px; left:10px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    z-index:2;
+  }
+  .pad-corner-controls .circle-btn{
+    background:rgba(20,21,26,0.55);
+    backdrop-filter: blur(2px);
+  }
+  .cursor-btn.active{ background:rgba(34,211,184,0.18); color:var(--slider-fill-1); box-shadow: inset 0 0 0 1px rgba(34,211,184,0.4); }
+
+
+  /* ---------- Pane: volume slider -> touchpad area, with a page that slides in from the right ---------- */
+  .pane{
+    position:relative;
+    flex:1 0 auto;
+    display:flex;
+    flex-direction:column;
+    margin-top:24px; /* extra gap below the power button row so the volume slider can't be tapped by mistake */
+  }
+  .pane-main{
+    flex:1 0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:8px; /* tighter gap: pulls volume slider / apps / media buttons closer together */
+    transform:none;
+    opacity:1;
+    transition:transform .35s cubic-bezier(.22,.8,.3,1), opacity .25s ease, visibility 0s;
+  }
+  .pane.open .pane-main{
+    transform:translateX(-40%);
+    opacity:0;
+    visibility:hidden;
+    transition:transform .35s cubic-bezier(.22,.8,.3,1), opacity .25s ease, visibility 0s .35s;
+  }
+  .pane-page{
+    position:absolute;
+    inset:0;
+    z-index:5;
+    background:#000;
+    border-radius:16px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    transform:translateX(105%);
+    visibility:hidden;
+    transition:transform .35s cubic-bezier(.22,.8,.3,1), visibility 0s .35s;
+  }
+  .pane.open .pane-page{
+    transform:translateX(0);
+    visibility:visible;
+    transition:transform .35s cubic-bezier(.22,.8,.3,1), visibility 0s;
+  }
+  /* channel pill: sits left of the number box (where the volume wheel used to be), stretches to match its height */
+  .ch-pill{
+    width:100%;
+    border-radius:16px; /* tall rectangle with softly rounded corners (not a round capsule) */
+    background:var(--btn-bg);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .ch-btn{
+    flex:1;
+    border:none;
+    background:transparent;
+    color:var(--icon-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    transition:background .12s ease;
+  }
+  .ch-btn:active{ background:rgba(34,211,184,0.18); color:var(--slider-fill-1); }
+  .ch-btn svg{ width:22px; height:22px; }
+  .ch-label{
+    flex:none;
+    margin:0 10px;
+    padding:5px 0;
+    text-align:center;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.6px;
+    color:var(--icon);
+    border-top:1px solid rgba(255,255,255,0.06);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    user-select:none;
+  }
+
+  /* Picture mode / Sound mode / Bluetooth, above the cast + mirroring row */
+  .modes-row{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:10px;
+    padding:0 12px;
+    margin-bottom:14px;
+  }
+  .modes-row .cast-btn{ gap:5px; padding:0 4px; }
+  .modes-row .cast-btn svg{ width:16px; height:16px; }
+  .modes-row .cast-btn span{ font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+  /* Cast + screen mirroring buttons, above the number pad */
+  .cast-row{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+    padding:0 12px;
+    margin-bottom:14px;
+  }
+  .cast-btn{
+    height:58px;
+    border:none;
+    border-radius:14px;
+    background:var(--btn-bg);
+    color:var(--icon);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:inherit;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.3px;
+    cursor:pointer;
+    padding:0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    transition:transform .12s ease, background .12s ease;
+  }
+  .cast-btn svg{ width:19px; height:19px; flex-shrink:0; }
+  .cast-btn:active{ transform:scale(0.96); background:rgba(34,211,184,0.18); color:var(--slider-fill-1); }
+
+  /* number pad: same 4-column grid as the rows below, uses only the first 3 columns (TV -> CC TXT) */
+  .num-pad{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:10px;
+    padding:0 12px;
+    margin-bottom:14px;
+  }
+  /* the number keys sit in their own outlined box (like the arrow box), columns 2-4; first column (above TV) stays blank */
+  .num-box{
+    grid-column:2 / span 3;
+    grid-row:1;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    background:var(--pad-bg);
+    border-radius:16px;
+    box-shadow: inset 0 0 0 1px var(--pad-border);
+    overflow:hidden;
+  }
+  .num-btn{
+    height:56px;
+    border:none;
+    background:transparent;
+    color:var(--icon);
+    font-family:inherit;
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    padding:0;
+    border-bottom:1px solid var(--pad-border);
+    transition:background .12s ease, transform .12s ease;
+  }
+  .num-btn:nth-child(3n+1), .num-btn:nth-child(3n+2){ border-right:1px solid var(--pad-border); }
+  .num-btn:active{ background:rgba(34,211,184,0.18); color:var(--slider-fill-1); transform:scale(0.92); }
+  /* bottom row of the number box: 0 is now split in half with a TV button alongside it */
+  .num-zero-row{ grid-column:1 / span 3; display:flex; }
+  .num-zero-row .num-btn{ flex:1; border-bottom:none; }
+  .num-zero-row .num-btn:first-child{ border-right:1px solid var(--pad-border); }
+  .num-zero-row .num-tv{ font-size:12px; letter-spacing:0.3px; }
+
+  /* cell left of the number box — now holds the channel pill (used to hold the volume wheel) */
+  .vol-wheel-cell{
+    grid-column:1;
+    grid-row:1;
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+  }
+
+  /* color buttons — now the top-most row on page 2 (fn-row with TV/INPUT/CC TXT was removed) */
+  .color-row{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:10px;
+    padding:0 12px;
+    margin-bottom:16px;
+  }
+  .color-btn{
+    height:28px;
+    border:none;
+    border-radius:9px;
+    cursor:pointer;
+    padding:0;
+    transition:transform .12s ease, filter .12s ease;
+  }
+  .color-btn:active{ transform:scale(0.94); filter:brightness(1.15); }
+  .c-red{ background:#e05252; }
+  .c-green{ background:#2bb96a; }
+  .c-yellow{ background:#e0e020; }
+  .c-blue{ background:#4a78e0; }
+
+  /* content flows from the top now (the old bottom-pin was for the sticky media row, which has moved to page 1) */
+  .pane-page{ display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden; scrollbar-width:none; padding-top:14px; touch-action:pan-y; }
+  .pane-page::-webkit-scrollbar{ display:none; }
+  .media-row{
+    position:sticky;
+    bottom:0;
+    background:#000;
+    padding-top:6px !important;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:10px;
+    padding:0 12px 10px;
+  }
+  .media-btn{ width:100%; height:auto; aspect-ratio:1 / 1; }
+  .media-btn svg{ width:40%; height:40%; }
+  .page-btn.active{ background:rgba(34,211,184,0.18); color:var(--slider-fill-1); box-shadow: inset 0 0 0 1px rgba(34,211,184,0.4); }
+
+  /* ---------- Bottom controls ---------- */
+  .bottom-controls{
+    flex:none;
+    display:flex;
+    align-items:stretch;
+    gap:clamp(5px, 2.6cqw, 10px);
+  }
+
+  /* vertical +/- volume buttons at the bottom (restored) */
+  .vol-slider{
+    position:relative;
+    width:clamp(34px, 14.85cqw, 73px);
+    border-radius:clamp(17px, 7.4cqw, 36px);
+    background:var(--btn-bg);
+    overflow:hidden;
+    flex-shrink:0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    display:flex;
+    flex-direction:column;
+  }
+  .vol-btn{
+    flex:1;
+    border:none;
+    background:transparent;
+    color:var(--icon-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    transition:background .12s ease, transform .12s ease;
+  }
+  .vol-btn:active{ background:rgba(34,211,184,0.18); color:var(--slider-fill-1); transform:scale(0.94); }
+  .vol-btn svg{ width:34%; height:34%; }
+  .vol-sep{
+    height:1px;
+    margin:0 8px;
+    background:rgba(255,255,255,0.06);
+    flex-shrink:0;
+  }
+
+  /* ---------- Horizontal volume slider (thin, drag left→right) ---------- */
+  .hvol-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:2px 0;
+    flex-shrink:0;
+  }
+  .hvol-track{
+    position:relative;
+    flex:1;
+    margin:0 clamp(27px, 11.7cqw, 55px); /* starts/ends exactly under the power button and the menu button, well clear of the screen edges so the phone's back-swipe gesture doesn't fire */
+    height:3px;
+    border-radius:2px;
+    background:var(--btn-bg);
+    cursor:pointer;
+    touch-action:none;
+  }
+  .hvol-track::before{
+    /* the visible line is only 3px tall, so give the actual touch/drag target a much bigger invisible zone around it — fixes the slider being hard to grab on the first try */
+    content:'';
+    position:absolute;
+    left:0; right:0;
+    top:-18px; bottom:-18px;
+    touch-action:none;
+  }
+  .hvol-fill{
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:60%;
+    border-radius:2px;
+    background:linear-gradient(90deg, var(--slider-fill-2), var(--slider-fill-1));
+  }
+  .hvol-handle{
+    position:absolute;
+    top:50%; left:60%;
+    width:24px; height:24px;
+    border-radius:50%;
+    background:#fff;
+    color:#0a2b26;
+    font-size:9px;
+    font-weight:700;
+    font-variant-numeric:tabular-nums;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:translate(-50%,-50%);
+    box-shadow:0 0 0 4px rgba(34,211,184,0.22);
+    pointer-events:none;
+  }
+  .hvol-step{
+    flex-shrink:0;
+    width:20px; height:20px;
+    border-radius:5px;
+    border:none;
+    background:var(--btn-bg);
+    color:var(--icon-dim);
+    font-size:13px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    transition:background .12s ease, transform .12s ease;
+  }
+  .hvol-step:active{ background:rgba(34,211,184,0.2); color:var(--slider-fill-1); transform:scale(0.9); }
+
+  .nav-columns{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(8px, 5cqw, 19px);
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:clamp(6px, 3.7cqw, 14px);
+  }
+
+  .circle-btn.active{ background:rgba(34,211,184,0.18); color:var(--slider-fill-1); box-shadow: inset 0 0 0 1px rgba(34,211,184,0.4); }
+
+  .footer-note{
+    text-align:center;
+    font-size:9px;
+    color:#4a4d55;
+    letter-spacing:0.3px;
+    padding-top:2px;
+  }
+
+  /* ---------- TV keyboard / search overlay (demo) ---------- */
+  .kb-overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(6,7,10,0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index:100;
+    display:none;
+    flex-direction:column;
+    padding:16px 16px 10px;
+  }
+  .kb-overlay.open{ display:flex; }
+  .kb-close{
+    align-self:flex-end;
+    width:30px; height:30px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    color:#e7e5df;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    flex-shrink:0;
+  }
+  .kb-close svg{ width:16px; height:16px; }
+  .kb-hint{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    color:#9a9ea6;
+    font-size:11px;
+    line-height:1.4;
+    padding:10px 2px 14px;
+  }
+  .kb-hint svg{ width:16px; height:16px; flex-shrink:0; margin-top:1px; }
+  .kb-field{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#8d9198;
+    padding-bottom:16px;
+    flex-shrink:0;
+  }
+  .kb-field svg{ width:20px; height:20px; flex-shrink:0; }
+  .kb-input{
+    flex:1;
+    min-width:0;
+    background:transparent;
+    border:none;
+    outline:none;
+    color:#e7e5df;
+    font-size:20px;
+    font-weight:700;
+    caret-color:var(--accent-green);
+  }
+  .kb-input::placeholder{ color:#6f7379; font-weight:700; }
+
+  .kb-keyboard{
+    margin-top:auto;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    background:#0b0c10;
+    border-radius:14px 14px 0 0;
+    padding:10px 6px 12px;
+    flex-shrink:0;
+  }
+  .kb-row{
+    display:flex;
+    gap:5px;
+    justify-content:center;
+  }
+  .kb-row-indent{ padding:0 14px; }
+  .kb-key{
+    flex:1;
+    min-width:0;
+    height:38px;
+    border:none;
+    border-radius:8px;
+    background:#26282f;
+    color:#e7e5df;
+    font-size:14px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background .1s ease, transform .1s ease;
+  }
+  .kb-key:active{ background:#34363e; transform:scale(0.94); }
+  .kb-key.active{ background:rgba(34,211,184,0.25); color:var(--slider-fill-1); }
+  .kb-key svg{ width:16px; height:16px; }
+  .kb-key.kb-num{ background:#1c1e24; color:#c7cad0; font-weight:500; }
+  .kb-wide{ flex:1.5; }
+  .kb-sym{ flex:1; font-size:11px; }
+  .kb-lang{ flex:3.2; font-size:10.5px; background:#1c1e24; color:#c7cad0; }
+  .kb-space{ flex:3.5; font-size:11px; color:#9a9ea6; }
+  .kb-done{ flex:1.6; background:#2563eb; color:#fff; font-size:12px; font-weight:700; }
+  .kb-done:active{ background:#1d4fc4; }
+
+  /* Sliding page: compact sizes on shorter screens so everything still fits without scrolling */
+  @media (max-height:830px){
+    .cast-btn{ height:44px; }
+    .modes-row{ margin-bottom:10px; }
+    .cast-row{ margin-bottom:10px; }
+    .num-btn{ height:44px; }
+    .num-pad{ margin-bottom:10px; }
+    .color-btn{ height:22px; }
+    .color-row{ margin-bottom:12px; }
+    .media-row{ padding-left:22px; padding-right:22px; padding-bottom:8px; }
+    .nav-bar{ height:clamp(172px, calc(46cqw + 42px), 232px); }
+  }
+  @media (max-height:730px){
+    .cast-btn{ height:38px; }
+    .modes-row{ margin-bottom:8px; }
+    .cast-row{ margin-bottom:8px; }
+    .num-btn{ height:40px; }
+    .num-pad{ margin-bottom:8px; }
+    .color-btn{ height:20px; }
+    .color-row{ margin-bottom:10px; }
+    .media-row{ padding-left:32px; padding-right:32px; padding-bottom:6px; }
+    .nav-bar{ height:clamp(168px, calc(46cqw + 38px), 228px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="phone">
+    <div class="side-btn power"></div>
+    <div class="side-btn vol"></div>
+
+    <div class="screen">
+
+      <!-- Blank space reserved for the phone's front camera / status icons area (~0.75in) -->
+      <div class="cam-safe-area" aria-hidden="true"></div>
+
+      <!-- Top row -->
+      <div class="top-row">
+        <button class="circle-btn btn-40 power-btn on" id="powerBtn" aria-label="Power" title="Power">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8"/><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/></svg>
+        </button>
+
+        <button class="title-block" id="tvPicker" aria-label="Select TV" title="Select TV">
+          <span class="status-dot" id="statusDot" title="Wi-Fi connection status"></span>
+          <span class="tv-name">New TV</span>
+          <span class="tv-version" id="tvVersion">v11.17</span>
+          <svg class="tv-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <button class="circle-btn btn-40" aria-label="Menu" title="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>
+        </button>
+      </div>
+
+      <!-- TV picker dropdown: shows TVs found on the same Wi-Fi -->
+      <div class="tv-dropdown" id="tvDropdown">
+        <div class="tv-dropdown-title">
+          <span class="spinner"></span> Searching for TVs on your Wi-Fi…
+        </div>
+        <button class="tv-option selected" data-name="New TV">
+          <span class="tv-option-dot online"></span> New TV
+        </button>
+        <button class="tv-option" data-name="Living Room TV">
+          <span class="tv-option-dot online"></span> Living Room TV
+        </button>
+        <button class="tv-option" data-name="Bedroom TV">
+          <span class="tv-option-dot online"></span> Bedroom TV
+        </button>
+      </div>
+
+      <!-- PANE: everything from the volume slider down to the touchpad. The 3-dot page slides over it from the right. Bottom controls stay fixed. -->
+      <div class="pane" id="pane">
+        <div class="pane-main">
+      <!-- Horizontal volume slider (thin, drag left-to-right) with no +/- buttons -->
+      <div class="hvol-wrap">
+        <div class="hvol-track" id="hvolTrack">
+          <div class="hvol-fill" id="hvolFill"></div>
+          <div class="hvol-handle" id="hvolHandle">5</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- App shortcuts (rendered by JS from APP_LIBRARY / currentAppIds, so hold-to-delete/rearrange and the + add button can work) -->
+      <div class="apps-scroll" id="appsScroll">
+        <div class="apps-row" id="appsRow"></div>
+      </div>
+
+      <!-- "Done" pill shown only while rearranging apps -->
+      <button class="reorder-done" id="reorderDone">Done</button>
+
+      <!-- Add-app overlay: pick a previously removed app back, or add any other app by name -->
+      <div class="add-app-overlay" id="addAppOverlay">
+        <div class="add-app-header">
+          <span>Add app</span>
+          <button class="kb-close" id="addAppClose" aria-label="Close" title="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="add-app-list" id="addAppList"></div>
+        <div class="add-app-custom">
+          <input type="text" id="addAppCustomInput" class="add-app-custom-input" placeholder="Other app name…">
+          <button class="add-app-custom-btn" id="addAppCustomBtn">Add</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Touchpad -->
+      <div class="pad-wrap">
+          <div class="nav-bar-single" id="navBarSingle">
+            <div class="media-row-top" id="mediaRowTop">
+              <button class="circle-btn media-btn" data-key="previous" aria-label="Previous" title="Previous">
+                <svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="2.6" height="14" rx="0.6"/><path d="M19.5 5.4v13.2c0 .5-.5.8-.9.5L9 12.5c-.4-.3-.4-.7 0-1l9.6-6.6c.4-.3.9 0 .9.5z"/></svg>
+              </button>
+              <button class="circle-btn media-btn" data-key="rewind" aria-label="Rewind" title="Rewind">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.5 6.3v11.4c0 .5-.5.8-.9.5L2.4 12.5c-.4-.3-.4-.7 0-1l8.2-5.7c.4-.3.9 0 .9.5z"/><path d="M21.5 6.3v11.4c0 .5-.5.8-.9.5l-8.2-5.7c-.4-.3-.4-.7 0-1l8.2-5.7c.4-.3.9 0 .9.5z"/></svg>
+              </button>
+              <button class="circle-btn media-btn" data-key="playpause" aria-label="Play / Pause" title="Play / Pause">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 5.4v13.2c0 .5.5.8.9.5l9-6.6c.4-.3.4-.7 0-1l-9-6.6c-.4-.3-.9 0-.9.5z"/><rect x="15.2" y="5" width="2.6" height="14" rx="0.6"/><rect x="19.6" y="5" width="2.6" height="14" rx="0.6"/></svg>
+              </button>
+              <button class="circle-btn media-btn" data-key="forward" aria-label="Fast forward" title="Fast forward">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.5 6.3v11.4c0 .5.5.8.9.5l8.2-5.7c.4-.3.4-.7 0-1l-8.2-5.7c-.4-.3-.9 0-.9.5z"/><path d="M2.5 6.3v11.4c0 .5.5.8.9.5l8.2-5.7c.4-.3.4-.7 0-1L3.4 5.8c-.4-.3-.9 0-.9.5z"/></svg>
+              </button>
+              <button class="circle-btn media-btn" data-key="next" aria-label="Next" title="Next">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 5.4v13.2c0 .5.5.8.9.5l9.6-6.6c.4-.3.4-.7 0-1L5.4 4.9c-.4-.3-.9 0-.9.5z"/><rect x="16.4" y="5" width="2.6" height="14" rx="0.6"/></svg>
+              </button>
+            </div>
+          </div>
+        <div class="touchpad" id="touchpad">
+          <span class="pad-hint">touch pad</span>
+
+          <!-- Round scroll wheel: up/down, left edge (like a real mouse wheel rolling) -->
+          <div class="wheel wheel-v" id="wheelV" title="Scroll up / down">
+            <div class="wheel-groove" id="wheelVGroove"></div>
+          </div>
+
+          <!-- Red scroll wheel on the right edge: volume (drag up = louder, drag down = quieter) -->
+          <div class="wheel wheel-vr wheel-red" id="wheelVR" title="Volume: drag up / down">
+            <div class="wheel-groove" id="wheelVRGroove"></div>
+          </div>
+
+          <!-- Round scroll wheel: left/right, bottom edge -->
+          <div class="wheel wheel-h" id="wheelH" title="Scroll left / right">
+            <div class="wheel-groove" id="wheelHGroove"></div>
+          </div>
+        </div>
+      </div>
+
+        </div>
+        <div class="pane-page" id="panePage" aria-hidden="true">
+          <!-- Cast (image/video/audio) & screen mirroring buttons -->
+          <div class="cast-row">
+            <button class="cast-btn" data-key="cast" aria-label="Cast" title="Cast image, video & audio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16.1A5 5 0 0 1 5.9 20"/><path d="M2 12.05A9 9 0 0 1 9.95 20"/><path d="M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/></svg>
+              <span>Cast</span>
+            </button>
+            <button class="cast-btn" data-key="mirror" aria-label="Screen Mirroring" title="Mirror this screen">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="13" height="9" rx="1.5"/><line x1="2" y1="17" x2="15" y2="17"/><rect x="17" y="6" width="5" height="9" rx="1"/></svg>
+              <span>Mirroring</span>
+            </button>
+          </div>
+
+          <!-- Number pad (computer style: 789 / 456 / 123 / 0), as wide as 3 buttons, shifted right (INPUT to 123); blank above TV -->
+          <div class="num-pad">
+            <!-- Channel pill (left of the number box, where the volume wheel used to be) -->
+            <div class="vol-wheel-cell">
+              <div class="ch-pill">
+                <button class="ch-btn" data-key="ch-up" aria-label="Channel up" title="Channel up">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+                </button>
+                <div class="ch-label">CH</div>
+                <button class="ch-btn" data-key="ch-down" aria-label="Channel down" title="Channel down">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="num-box">
+              <button class="num-btn" data-key="num1" aria-label="1" title="1">1</button>
+              <button class="num-btn" data-key="num2" aria-label="2" title="2">2</button>
+              <button class="num-btn" data-key="num3" aria-label="3" title="3">3</button>
+              <button class="num-btn" data-key="num4" aria-label="4" title="4">4</button>
+              <button class="num-btn" data-key="num5" aria-label="5" title="5">5</button>
+              <button class="num-btn" data-key="num6" aria-label="6" title="6">6</button>
+              <button class="num-btn" data-key="num7" aria-label="7" title="7">7</button>
+              <button class="num-btn" data-key="num8" aria-label="8" title="8">8</button>
+              <button class="num-btn" data-key="num9" aria-label="9" title="9">9</button>
+              <div class="num-zero-row">
+                <button class="num-btn num-zero" data-key="num0" aria-label="0" title="0">0</button>
+                <button class="num-btn num-tv" data-key="tv" aria-label="TV" title="TV">TV</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Color buttons (red / green / yellow / blue) -->
+          <div class="color-row">
+            <button class="color-btn c-red" data-key="red" aria-label="Red" title="Red"></button>
+            <button class="color-btn c-green" data-key="green" aria-label="Green" title="Green"></button>
+            <button class="color-btn c-yellow" data-key="yellow" aria-label="Yellow" title="Yellow"></button>
+            <button class="color-btn c-blue" data-key="blue" aria-label="Blue" title="Blue"></button>
+          </div>
+
+          <!-- Navigation D-pad: arrows around a center OK, all in one bordered cross-shaped box -->
+          <div class="nav-bar" id="navBar">
+            <div class="nav-arrows">
+              <div class="nav-btn nav-side" data-dir="left" title="Left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </div>
+              <div class="nav-mid nav-mid-3">
+                <div class="nav-btn up" data-dir="up" title="Up">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+                </div>
+                <div class="nav-btn ok-mid" data-key="ok" title="OK">
+                  <span class="nav-label">OK</span>
+                </div>
+                <div class="nav-btn down" data-dir="down" title="Down">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </div>
+              </div>
+              <div class="nav-btn nav-side right" data-dir="right" title="Right">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Bottom controls -->
+      <div class="bottom-controls">
+        <div class="vol-slider" id="volSlider">
+          <button class="vol-btn" id="volUp2" aria-label="Volume up" title="Volume up">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          </button>
+          <div class="vol-sep"></div>
+          <button class="vol-btn" id="volDown2" aria-label="Volume down" title="Volume down">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </button>
+        </div>
+
+        <div class="nav-columns">
+          <div class="nav-row">
+            <button class="circle-btn btn-wide2" id="backHomeBtn" aria-label="Back" title="Back">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="circle-btn btn-46" id="homeBtn" aria-label="Home" title="Home">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+            </button>
+            <button class="circle-btn btn-46 page-btn" id="pageBtn" aria-label="More options page" title="More options">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5.5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="18.5" cy="12" r="1.7"/></svg>
+            </button>
+          </div>
+          <div class="nav-row">
+            <button class="circle-btn btn-46" id="muteBtn" aria-label="Mute" title="Mute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M23 9l-6 6"/><path d="M17 9l6 6"/></svg>
+            </button>
+            <button class="circle-btn btn-46" aria-label="Microphone" title="Microphone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/></svg>
+            </button>
+            <button class="circle-btn btn-46" id="recentBtn" aria-label="Recent apps" title="Recent apps">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="11" height="13" rx="2"/><path d="M8 4h9a3 3 0 0 1 3 3v9"/></svg>
+            </button>
+            <button class="circle-btn btn-46" id="keyboardBtn" aria-label="Keyboard" title="Keyboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01"/><path d="M10 10h.01"/><path d="M14 10h.01"/><path d="M18 10h.01"/><path d="M6 14h12"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- On-screen TV keyboard overlay (demo only — real ADB text-input wiring comes later) -->
+      <div class="kb-overlay" id="kbOverlay">
+        <button class="kb-close" id="kbClose" aria-label="Close keyboard" title="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+        </button>
+
+        <div class="kb-hint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01"/><path d="M11 12h1v4h1"/></svg>
+          <span>Search expects TV keyboard to be opened already.</span>
+        </div>
+
+        <div class="kb-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 9h.01"/><path d="M9 9h.01"/><path d="M12 9h.01"/><path d="M15 9h.01"/><path d="M18 9h.01"/><path d="M7 13h10"/></svg>
+          <input type="text" id="kbInput" class="kb-input" placeholder="Start typing…" readonly>
+        </div>
+
+        <!-- On-screen keyboard -->
+        <div class="kb-keyboard" id="kbKeyboard">
+          <div class="kb-row">
+            <button class="kb-key kb-num" data-key="1">1</button>
+            <button class="kb-key kb-num" data-key="2">2</button>
+            <button class="kb-key kb-num" data-key="3">3</button>
+            <button class="kb-key kb-num" data-key="4">4</button>
+            <button class="kb-key kb-num" data-key="5">5</button>
+            <button class="kb-key kb-num" data-key="6">6</button>
+            <button class="kb-key kb-num" data-key="7">7</button>
+            <button class="kb-key kb-num" data-key="8">8</button>
+            <button class="kb-key kb-num" data-key="9">9</button>
+            <button class="kb-key kb-num" data-key="0">0</button>
+          </div>
+          <div class="kb-row">
+            <button class="kb-key" data-key="q">q</button>
+            <button class="kb-key" data-key="w">w</button>
+            <button class="kb-key" data-key="e">e</button>
+            <button class="kb-key" data-key="r">r</button>
+            <button class="kb-key" data-key="t">t</button>
+            <button class="kb-key" data-key="y">y</button>
+            <button class="kb-key" data-key="u">u</button>
+            <button class="kb-key" data-key="i">i</button>
+            <button class="kb-key" data-key="o">o</button>
+            <button class="kb-key" data-key="p">p</button>
+          </div>
+          <div class="kb-row kb-row-indent">
+            <button class="kb-key" data-key="a">a</button>
+            <button class="kb-key" data-key="s">s</button>
+            <button class="kb-key" data-key="d">d</button>
+            <button class="kb-key" data-key="f">f</button>
+            <button class="kb-key" data-key="g">g</button>
+            <button class="kb-key" data-key="h">h</button>
+            <button class="kb-key" data-key="j">j</button>
+            <button class="kb-key" data-key="k">k</button>
+            <button class="kb-key" data-key="l">l</button>
+          </div>
+          <div class="kb-row">
+            <button class="kb-key kb-wide" id="kbShift" aria-label="Shift">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l7 7h-4v7H9v-7H5z"/></svg>
+            </button>
+            <button class="kb-key" data-key="z">z</button>
+            <button class="kb-key" data-key="x">x</button>
+            <button class="kb-key" data-key="c">c</button>
+            <button class="kb-key" data-key="v">v</button>
+            <button class="kb-key" data-key="b">b</button>
+            <button class="kb-key" data-key="n">n</button>
+            <button class="kb-key" data-key="m">m</button>
+            <button class="kb-key kb-wide" id="kbBackspace" aria-label="Backspace">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 6H8l-6 6 6 6h13a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z"/><path d="M12 10l5 4"/><path d="M17 10l-5 4"/></svg>
+            </button>
+          </div>
+          <div class="kb-row">
+            <button class="kb-key kb-sym" data-key="!#1">!#1</button>
+            <button class="kb-key kb-lang">English(India)</button>
+            <button class="kb-key kb-space" data-key=" ">space</button>
+            <button class="kb-key kb-sym" data-key=".">.</button>
+            <button class="kb-key kb-done" id="kbDone">Done</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Phone frame removed — the remote now fills the viewport via CSS (100vw/100vh),
+  // so no JS scaling is needed. phoneScale kept at 1 since other code references it.
+  var phoneScale = 1;
+
+  // TV picker dropdown — mockup Wi-Fi TV search/selection
+  var tvPicker = document.getElementById('tvPicker');
+  var tvDropdown = document.getElementById('tvDropdown');
+  var tvNameEl = tvPicker.querySelector('.tv-name');
+
+  function closeTvDropdown(){
+    tvDropdown.classList.remove('open');
+    tvPicker.classList.remove('open');
+  }
+  tvPicker.addEventListener('click', function(e){
+    e.stopPropagation();
+    var isOpen = tvDropdown.classList.toggle('open');
+    tvPicker.classList.toggle('open', isOpen);
+  });
+  tvDropdown.querySelectorAll('.tv-option').forEach(function(opt){
+    opt.addEventListener('click', function(e){
+      e.stopPropagation();
+      tvDropdown.querySelectorAll('.tv-option').forEach(function(o){ o.classList.remove('selected'); });
+      opt.classList.add('selected');
+      tvNameEl.textContent = opt.getAttribute('data-name');
+      closeTvDropdown();
+    });
+  });
+  document.addEventListener('click', function(e){
+    if (!tvDropdown.contains(e.target) && !tvPicker.contains(e.target)) closeTvDropdown();
+  });
+
+  // Wi-Fi status dot (mockup toggle: click to preview connected/disconnected)
+  var statusDot = document.getElementById('statusDot');
+  statusDot.addEventListener('click', function(e){
+    e.stopPropagation();
+    statusDot.classList.toggle('offline');
+  });
+
+  // Power toggle (visual only)
+  var power = document.getElementById('powerBtn');
+  power.addEventListener('click', function(){
+    power.classList.toggle('on');
+  });
+
+  // 3-dot button: slides a new page in from the right over the volume->touchpad area (tap again to go back)
+  var pageBtn = document.getElementById('pageBtn');
+  var pane = document.getElementById('pane');
+  var panePage = document.getElementById('panePage');
+  var touchpad = document.getElementById('touchpad');
+  pageBtn.addEventListener('click', function(){
+    var open = pane.classList.toggle('open');
+    pageBtn.classList.toggle('active', open);
+    panePage.setAttribute('aria-hidden', open ? 'false' : 'true');
+    if (open) requestAnimationFrame(function(){ panePage.scrollTop = panePage.scrollHeight; });
+  });
+
+  // Swipe RIGHT anywhere on the second page = go back to page 1 (same effect as tapping the 3-dot button again)
+  (function(){
+    var startX = 0, startY = 0, tracking = false, isSwipe = false;
+    // capture:true so this still fires even where nav-bar calls stopPropagation() on pointerdown
+    panePage.addEventListener('pointerdown', function(e){
+      startX = e.clientX; startY = e.clientY;
+      tracking = true; isSwipe = false;
+    }, {passive:true, capture:true});
+    panePage.addEventListener('pointermove', function(e){
+      if(!tracking) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if(!isSwipe && dx > 60 && Math.abs(dx) > Math.abs(dy) * 1.5){
+        isSwipe = true;
+      }
+    }, {passive:true});
+    function finishSwipe(){
+      if(tracking && isSwipe && pane.classList.contains('open')){
+        pane.classList.remove('open');
+        pageBtn.classList.remove('active');
+        panePage.setAttribute('aria-hidden', 'true');
+      }
+      tracking = false; isSwipe = false;
+    }
+    // Browsers often fire pointercancel instead of pointerup mid-swipe on a scrollable
+    // element (they hand the gesture to native touch handling) — so both must close the page.
+    panePage.addEventListener('pointerup', finishSwipe);
+    panePage.addEventListener('pointercancel', finishSwipe);
+  })();
+  touchpad.addEventListener('pointerdown', function(){ touchpad.classList.add('active'); });
+  ['pointerup','pointerleave'].forEach(function(ev){
+    touchpad.addEventListener(ev, function(){ touchpad.classList.remove('active'); });
+  });
+
+  // Round scroll wheel — dragging shifts the grooved texture, simulating a real wheel rotating
+  function setupWheel(wheelEl, grooveEl, axis, onDelta){
+    var dragging = false, originPos = 0, offset = 0;
+    var GROOVE_SIZE = 9; // px, must match the CSS background-size step
+
+    function posFromEvent(e){ return axis === 'v' ? e.clientY : e.clientX; }
+
+    wheelEl.addEventListener('pointerdown', function(e){
+      e.stopPropagation();
+      dragging = true;
+      originPos = posFromEvent(e);
+      wheelEl.classList.add('active');
+      wheelEl.setPointerCapture(e.pointerId);
+    });
+    wheelEl.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      e.stopPropagation();
+      var pos = posFromEvent(e);
+      var delta = pos - originPos;
+      originPos = pos;
+      offset = (offset + delta) % GROOVE_SIZE;
+      if (onDelta) onDelta(delta);
+      if (axis === 'v') {
+        grooveEl.style.backgroundPositionY = offset + 'px';
+      } else {
+        grooveEl.style.backgroundPositionX = offset + 'px';
+      }
+    });
+    function stop(e){
+      if(e) e.stopPropagation();
+      dragging = false;
+      wheelEl.classList.remove('active');
+    }
+    wheelEl.addEventListener('pointerup', stop);
+    wheelEl.addEventListener('pointercancel', stop);
+    wheelEl.addEventListener('pointerleave', function(e){ if(dragging) stop(e); });
+  }
+
+  setupWheel(document.getElementById('wheelV'), document.getElementById('wheelVGroove'), 'v');
+  setupWheel(document.getElementById('wheelH'), document.getElementById('wheelHGroove'), 'h');
+
+  // Volume wheels: the one on the 3-dot page and the red one on the touchpad's right edge.
+  // Drag UP = volume up, drag DOWN = volume down (drives the main volume slider).
+  var volAcc = 0;
+  var VOL_PX_PER_STEP = 4; // pixels of drag per 1 volume step
+  function volFromDrag(delta){
+    volAcc += (-delta) / VOL_PX_PER_STEP; // finger moving up => delta < 0 => volume goes up
+    var whole = Math.trunc(volAcc);
+    if (whole !== 0) { setHLevel(hLevel + whole); volAcc -= whole; }
+  }
+  function setupVolWheel(wheelEl, grooveEl){
+    setupWheel(wheelEl, grooveEl, 'v', volFromDrag);
+    // mouse wheel / trackpad scroll over it works too (scroll up = louder)
+    var off = 0;
+    wheelEl.addEventListener('wheel', function(e){
+      e.preventDefault();
+      setHLevel(hLevel + (e.deltaY < 0 ? 2 : -2));
+      off = (off + (e.deltaY < 0 ? -6 : 6)) % 9;
+      grooveEl.style.backgroundPositionY = off + 'px';
+    }, { passive:false });
+  }
+  setupVolWheel(document.getElementById('wheelVR'), document.getElementById('wheelVRGroove'));
+
+  // App icons row — drag left/right to reveal more apps beyond the first few
+  var appsScroll = document.getElementById('appsScroll');
+  // Pointer capture starts ONLY after the finger/mouse moves past a small threshold,
+  // so a plain tap still lands on the app icon itself (its click won't be swallowed).
+  var DRAG_THRESHOLD = 6; // px
+  var dragging = false, moved = false, suppressClick = false;
+  var startX = 0, startScroll = 0, activePointer = null;
+
+  appsScroll.addEventListener('pointerdown', function(e){
+    if(reorderMode) return; // icon-drag (rearranging) takes over instead of row-scroll
+    dragging = true;
+    moved = false;
+    startX = e.clientX;
+    startScroll = appsScroll.scrollLeft;
+    activePointer = e.pointerId;
+  });
+  appsScroll.addEventListener('pointermove', function(e){
+    if(!dragging || reorderMode) return;
+    var rawDx = e.clientX - startX;
+    if(!moved){
+      if(Math.abs(rawDx) < DRAG_THRESHOLD) return; // still just a tap
+      moved = true;
+      appsScroll.classList.add('dragging');
+      appsScroll.setPointerCapture(activePointer);
+      clearLongPress();
+    }
+    appsScroll.scrollLeft = startScroll - rawDx / phoneScale;
+  });
+  function endAppsDrag(){
+    if(!dragging) return;
+    dragging = false;
+    appsScroll.classList.remove('dragging');
+    clearLongPress();
+    if(moved){
+      // a drag must not also count as a tap on whichever icon the finger ended on
+      suppressClick = true;
+      setTimeout(function(){ suppressClick = false; }, 0);
+    }
+    moved = false;
+    activePointer = null;
+  }
+  ['pointerup','pointercancel','pointerleave'].forEach(function(ev){
+    appsScroll.addEventListener(ev, endAppsDrag);
+  });
+  appsScroll.addEventListener('click', function(e){
+    if(suppressClick){ e.stopPropagation(); e.preventDefault(); }
+  }, true);
+
+  // ---- App shortcuts: hold to Rearrange/Delete, "+" to add apps back (or add any other app) ----
+  var APP_LIBRARY = [
+    { id:'youtube',   label:'YouTube',    cls:'youtube',  inner:'<svg viewBox="0 0 24 24" fill="#fff"><path d="M9 8l7 4-7 4V8z"/></svg>' },
+    { id:'netflix',   label:'Netflix',    cls:'netflix',  inner:'<span>N</span>' },
+    { id:'prime',     label:'Prime Video',cls:'prime',    inner:'<svg viewBox="0 0 24 24" fill="#fff"><path d="M9 8l7 4-7 4V8z"/></svg>' },
+    { id:'hotstar',   label:'Hotstar',    cls:'hotstar',  inner:'<span>Hotstar</span>' },
+    { id:'zee5',      label:'Zee5',       cls:'zee5',     inner:'<span>ZEE5</span>' },
+    { id:'sonyliv',   label:'Sony LIV',   cls:'sonyliv',  inner:'<span>SonyLIV</span>' },
+    { id:'jiocinema', label:'JioCinema',  cls:'jiocinema',inner:'<span>Jio</span>' }
+  ];
+  var currentAppIds = APP_LIBRARY.map(function(a){ return a.id; });
+
+  var appsRow = document.getElementById('appsRow');
+  var reorderDoneBtn = document.getElementById('reorderDone');
+  var addAppOverlay = document.getElementById('addAppOverlay');
+  var addAppList = document.getElementById('addAppList');
+
+  function findApp(id){
+    for(var i=0;i<APP_LIBRARY.length;i++){ if(APP_LIBRARY[i].id === id) return APP_LIBRARY[i]; }
+    return null;
+  }
+
+  function renderAppsRow(){
+    appsRow.innerHTML = '';
+    currentAppIds.forEach(function(id, idx){
+      var app = findApp(id);
+      if(!app) return;
+      var btn = document.createElement('button');
+      btn.className = 'app-icon ' + app.cls;
+      btn.setAttribute('data-app-id', id);
+      btn.setAttribute('aria-label', app.label);
+      btn.setAttribute('title', app.label);
+      btn.style.setProperty('--wiggle-seed', idx % 4); // slight phase offset so icons don't all wiggle in sync
+      btn.innerHTML = app.inner;
+
+      // Small "X" badge — only visible while wiggling; taps it to delete this app
+      var xBtn = document.createElement('span');
+      xBtn.className = 'app-remove-x';
+      xBtn.textContent = '✕';
+      xBtn.addEventListener('pointerdown', function(e){ e.stopPropagation(); });
+      xBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        currentAppIds = currentAppIds.filter(function(aid){ return aid !== id; });
+        renderAppsRow();
+        appsRow.classList.add('reorder-mode');
+      });
+      btn.appendChild(xBtn);
+
+      // While wiggling, holding + moving this icon drags it to reorder
+      btn.addEventListener('pointerdown', function(e){
+        if(!reorderMode) return;
+        e.stopPropagation();
+        startAppDrag(e, btn, id);
+      });
+      btn.addEventListener('click', function(e){
+        if(reorderMode){ e.preventDefault(); return; } // wiggling: tap does nothing (drag or X instead)
+        // TODO (real code): launch this app → monkey -p <package> -c android.intent.category.LAUNCHER 1
+      });
+      appsRow.appendChild(btn);
+    });
+    var addBtn = document.createElement('button');
+    addBtn.className = 'app-icon add-app-btn';
+    addBtn.id = 'addAppBtn';
+    addBtn.setAttribute('aria-label', 'Add app');
+    addBtn.setAttribute('title', 'Add app');
+    addBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>';
+    addBtn.addEventListener('click', openAddAppOverlay);
+    appsRow.appendChild(addBtn);
+  }
+
+  // -- Hold an icon → whole row starts wiggling (iOS-style edit mode) --
+  var LONG_PRESS_MS = 500;
+  var longPressTimer = null;
+
+  function clearLongPress(){ clearTimeout(longPressTimer); longPressTimer = null; }
+
+  appsScroll.addEventListener('pointerdown', function(e){
+    var iconBtn = e.target.closest('.app-icon:not(.add-app-btn)');
+    if(!iconBtn || reorderMode) return;
+    clearLongPress();
+    longPressTimer = setTimeout(function(){
+      if(moved) return; // turned into a scroll drag — not a long-press
+      var id = iconBtn.getAttribute('data-app-id');
+      enterReorderMode();
+      suppressClick = true;
+      setTimeout(function(){ suppressClick = false; }, 80);
+      startAppDrag(e, appsRow.querySelector('[data-app-id="' + id + '"]'), id); // same finger keeps dragging it
+    }, LONG_PRESS_MS);
+  });
+
+  var reorderMode = false;
+  function enterReorderMode(){
+    reorderMode = true;
+    appsRow.classList.add('reorder-mode');
+    reorderDoneBtn.classList.add('open');
+  }
+  function exitReorderMode(){
+    reorderMode = false;
+    endAppDrag();
+    appsRow.classList.remove('reorder-mode');
+    reorderDoneBtn.classList.remove('open');
+  }
+  reorderDoneBtn.addEventListener('click', exitReorderMode);
+
+  // -- Drag any wiggling icon left/right to reorder it live --
+  var dragEl = null, dragId = null, dragStartX = 0;
+  function startAppDrag(e, btn, id){
+    dragEl = btn;
+    dragId = id;
+    dragStartX = e.clientX;
+    btn.classList.add('reorder-picked');
+    try{ btn.setPointerCapture(e.pointerId); }catch(err){}
+  }
+  document.addEventListener('pointermove', function(e){
+    if(!dragEl) return;
+    var dx = e.clientX - dragStartX;
+    dragEl.style.transform = 'translateX(' + dx + 'px)';
+    var siblings = Array.prototype.slice.call(appsRow.querySelectorAll('.app-icon:not(.add-app-btn)'));
+    for(var i=0;i<siblings.length;i++){
+      var s = siblings[i];
+      if(s === dragEl) continue;
+      var r = s.getBoundingClientRect();
+      if(e.clientX > r.left && e.clientX < r.right){
+        var draggedIdx = currentAppIds.indexOf(dragId);
+        var overIdx = currentAppIds.indexOf(s.getAttribute('data-app-id'));
+        if(draggedIdx > -1 && overIdx > -1 && draggedIdx !== overIdx){
+          currentAppIds.splice(draggedIdx, 1);
+          currentAppIds.splice(overIdx, 0, dragId);
+          renderAppsRow();
+          appsRow.classList.add('reorder-mode');
+          dragEl = appsRow.querySelector('[data-app-id="' + dragId + '"]');
+          dragEl.classList.add('reorder-picked');
+          dragStartX = e.clientX; // icon just re-snapped under the finger
+        }
+        break;
+      }
+    }
+  });
+  function endAppDrag(){
+    if(!dragEl) return;
+    dragEl.style.transform = '';
+    dragEl.classList.remove('reorder-picked');
+    dragEl = null;
+    dragId = null;
+  }
+  document.addEventListener('pointerup', endAppDrag);
+  document.addEventListener('pointercancel', endAppDrag);
+
+  // -- "+" add-app overlay: shows every library app NOT currently in the row, plus a custom-add field --
+  function openAddAppOverlay(){
+    var missing = APP_LIBRARY.filter(function(a){ return currentAppIds.indexOf(a.id) === -1; });
+    addAppList.innerHTML = '';
+    if(missing.length === 0){
+      var empty = document.createElement('div');
+      empty.className = 'add-app-empty';
+      empty.textContent = 'All apps are already added.';
+      addAppList.appendChild(empty);
+    } else {
+      missing.forEach(function(app){
+        var row = document.createElement('button');
+        row.className = 'add-app-item';
+        var preview = document.createElement('span');
+        preview.className = 'app-icon ' + app.cls;
+        preview.innerHTML = app.inner;
+        row.appendChild(preview);
+        var label = document.createElement('span');
+        label.textContent = app.label;
+        row.appendChild(label);
+        row.addEventListener('click', function(){
+          currentAppIds.push(app.id);
+          renderAppsRow();
+          openAddAppOverlay(); // refresh the remaining list
+        });
+        addAppList.appendChild(row);
+      });
+    }
+    addAppOverlay.classList.add('open');
+  }
+  document.getElementById('addAppClose').addEventListener('click', function(){
+    addAppOverlay.classList.remove('open');
+  });
+  document.getElementById('addAppCustomBtn').addEventListener('click', function(){
+    var input = document.getElementById('addAppCustomInput');
+    var name = input.value.trim();
+    if(!name) return;
+    var id = 'custom-' + Date.now();
+    APP_LIBRARY.push({
+      id: id,
+      label: name,
+      cls: 'custom-app',
+      inner: '<span>' + name.slice(0,10) + '</span>'
+      // TODO (real code): store the real package name here so the launch handler can use it
+    });
+    currentAppIds.push(id);
+    input.value = '';
+    renderAppsRow();
+    addAppOverlay.classList.remove('open');
+  });
+
+  renderAppsRow();
+
+  // Nav-bar (left/up/down/right) — keep clicks separate from the plain touchpad drag area
+  document.getElementById('navBar').addEventListener('pointerdown', function(e){
+    e.stopPropagation();
+  });
+
+  // Back button
+  document.getElementById('backHomeBtn').addEventListener('click', function(){
+    // TODO (real code): input keyevent 4  (BACK)
+  });
+
+  // Home button
+  document.getElementById('homeBtn').addEventListener('click', function(){
+    // TODO (real code): input keyevent 3  (HOME)
+  });
+
+  // Recent apps button (now sits next to Keyboard)
+  document.getElementById('recentBtn').addEventListener('click', function(){
+    // TODO (real code): input keyevent 187  (APP_SWITCH)
+  });
+
+  // Mute toggle (visual only)
+  var muteBtn = document.getElementById('muteBtn');
+  muteBtn.addEventListener('click', function(){
+    muteBtn.classList.toggle('active');
+    muteBtn.style.color = muteBtn.classList.contains('active') ? '#ef4444' : '';
+  });
+
+  // Horizontal volume slider — drag left (low) to right (high); number shown inside the round handle
+  var hTrack = document.getElementById('hvolTrack');
+  var hFill = document.getElementById('hvolFill');
+  var hHandle = document.getElementById('hvolHandle');
+  var hLevel = 5; // percent
+
+  function setHLevel(pct){
+    hLevel = Math.max(0, Math.min(100, Math.round(pct)));
+    hFill.style.width = hLevel + '%';
+    hHandle.style.left = hLevel + '%';
+    hHandle.textContent = hLevel;
+  }
+
+  function hPctFromEvent(e){
+    var rect = hTrack.getBoundingClientRect();
+    var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    return (x / rect.width) * 100;
+  }
+
+  var hDragging = false;
+  hTrack.addEventListener('pointerdown', function(e){
+    hDragging = true;
+    hTrack.setPointerCapture(e.pointerId);
+    setHLevel(hPctFromEvent(e));
+  });
+  hTrack.addEventListener('pointermove', function(e){
+    if(!hDragging) return;
+    setHLevel(hPctFromEvent(e));
+  });
+  hTrack.addEventListener('pointerup', function(){ hDragging = false; });
+  hTrack.addEventListener('pointercancel', function(){ hDragging = false; });
+
+  function startHold(btn, step){
+    var fired = false;
+    var timeoutId, intervalId;
+
+    function fire(){ fired = true; setHLevel(hLevel + step); }
+
+    function begin(e){
+      e.preventDefault();
+      fired = false;
+      fire(); // immediate first step
+      timeoutId = setTimeout(function(){
+        intervalId = setInterval(fire, 90);
+      }, 350); // short delay before repeat kicks in
+      btn.setPointerCapture && e.pointerId != null && btn.setPointerCapture(e.pointerId);
+    }
+    function end(){
+      clearTimeout(timeoutId);
+      clearInterval(intervalId);
+    }
+
+    btn.addEventListener('pointerdown', begin);
+    btn.addEventListener('pointerup', end);
+    btn.addEventListener('pointerleave', end);
+    btn.addEventListener('pointercancel', end);
+  }
+
+  startHold(document.getElementById('volDown2'), -5);
+  startHold(document.getElementById('volUp2'), 5);
+
+  setHLevel(hLevel);
+
+  // On-screen TV keyboard overlay (demo — just types locally, no real ADB command yet)
+  var kbOverlay = document.getElementById('kbOverlay');
+  var kbInput = document.getElementById('kbInput');
+  var kbShift = document.getElementById('kbShift');
+  var shiftOn = false;
+
+  function openKb(){
+    kbOverlay.classList.add('open');
+    kbInput.removeAttribute('readonly');
+    kbInput.focus();
+  }
+  function closeKb(){
+    kbOverlay.classList.remove('open');
+  }
+
+  document.getElementById('keyboardBtn').addEventListener('click', openKb);
+  document.getElementById('kbClose').addEventListener('click', closeKb);
+  document.getElementById('kbDone').addEventListener('click', closeKb);
+
+  document.getElementById('kbKeyboard').addEventListener('click', function(e){
+    var keyBtn = e.target.closest('.kb-key');
+    if(!keyBtn) return;
+
+    if(keyBtn.id === 'kbShift'){
+      shiftOn = !shiftOn;
+      kbShift.classList.toggle('active', shiftOn);
+      document.querySelectorAll('#kbKeyboard .kb-key[data-key]').forEach(function(k){
+        var key = k.getAttribute('data-key');
+        if(key && key.length === 1 && /[a-z]/i.test(key)){
+          k.textContent = shiftOn ? key.toUpperCase() : key.toLowerCase();
+        }
+      });
+      return;
+    }
+    if(keyBtn.id === 'kbBackspace'){
+      kbInput.value = kbInput.value.slice(0, -1);
+      return;
+    }
+    var val = keyBtn.getAttribute('data-key');
+    if(val == null) return; // language button etc. — no-op in this demo
+    var ch = (val.length === 1 && /[a-z]/i.test(val)) ? (shiftOn ? val.toUpperCase() : val.toLowerCase()) : val;
+    kbInput.value += ch;
+  });
+})();
+</script>
+
+</body>
+</html>
